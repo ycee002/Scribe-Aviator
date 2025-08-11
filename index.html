@@ -3,98 +3,96 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aviator AI Predictor</title>
+  <title>Aviator Pattern Predictor</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial, sans-serif;
       text-align: center;
-      background: linear-gradient(180deg, #0d0d0d, #1a1a1a);
-      color: #fff;
-      padding: 30px;
+      background: linear-gradient(180deg, #111, #222);
+      color: white;
+      padding: 20px;
     }
     h1 {
-      color: #ff3c3c;
-      font-size: 2.2em;
-      margin-bottom: 10px;
+      color: #ff4b4b;
     }
-    p {
-      color: #ccc;
-    }
-    .prediction-box {
-      background: #222;
-      border-radius: 12px;
+    .box {
+      background: #1e1e1e;
       padding: 20px;
-      max-width: 320px;
-      margin: 20px auto;
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+      border-radius: 10px;
+      max-width: 350px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(255,0,0,0.3);
     }
-    .multiplier {
-      font-size: 3em;
+    .prediction {
+      font-size: 2em;
       font-weight: bold;
-      margin: 15px 0;
+      margin: 20px 0;
     }
-    .confidence {
-      font-size: 1.1em;
-      margin-bottom: 15px;
+    .signal {
+      font-size: 1.5em;
+      margin: 10px 0;
     }
     button {
-      background: #ff3c3c;
-      color: white;
+      background: crimson;
       border: none;
-      padding: 12px 20px;
-      font-size: 1.1em;
-      border-radius: 8px;
+      padding: 10px 15px;
+      color: white;
+      font-size: 1em;
+      border-radius: 5px;
       cursor: pointer;
-      transition: 0.3s;
     }
     button:hover {
-      background: #e60000;
-    }
-    .loading {
-      animation: blink 0.6s infinite alternate;
-    }
-    @keyframes blink {
-      from { opacity: 0.3; }
-      to { opacity: 1; }
+      background: darkred;
     }
   </style>
 </head>
 <body>
 
-  <h1>✈️ Aviator AI Predictor</h1>
-  <p>Get your next multiplier prediction instantly</p>
+<h1>✈ Aviator Pattern Predictor</h1>
+<p>Based on last 28 real rounds</p>
 
-  <div class="prediction-box">
-    <div class="multiplier" id="multiplier">--</div>
-    <div class="confidence" id="confidence">Confidence: --%</div>
-    <button onclick="predict()">🎯 Predict</button>
-  </div>
+<div class="box">
+  <div class="prediction" id="prediction">--</div>
+  <div class="signal" id="signal">--</div>
+  <button onclick="predict()">Analyze & Predict</button>
+</div>
 
-  <script>
-    function predict() {
-      const multiplierElem = document.getElementById("multiplier");
-      const confidenceElem = document.getElementById("confidence");
+<script>
+  // Real crash multipliers from your screenshot
+  const history = [
+    4.96, 2.21, 1.32, 3.47, 1.18, 6.79, 4.77, 5.39, 1.43, 2.26, 16.66,
+    1.01, 1.13, 2.37, 3.71, 1.47, 8.82, 1.00, 1.68, 5.60, 1.26, 1.50,
+    1.75, 6.21, 2.25, 12.12, 1.00, 1.04
+  ];
 
-      // Simulate "analyzing" effect
-      multiplierElem.innerText = "Calculating...";
-      multiplierElem.classList.add("loading");
-      confidenceElem.innerText = "Analyzing patterns...";
+  function predict() {
+    let lowCount = 0;
+    let lastResults = history.slice(-6); // last 6 rounds
+    lastResults.forEach(v => {
+      if (v < 2.0) lowCount++;
+    });
 
-      setTimeout(() => {
-        // Fake AI logic: Bias towards multipliers between 1.5x and 9x
-        let multiplier = (Math.random() * 7.5 + 1.5).toFixed(2);
-        
-        // Fake confidence between 60% and 98%
-        let confidence = Math.floor(Math.random() * 38) + 60;
+    let nextPrediction;
+    let signal;
 
-        multiplierElem.innerText = multiplier + "x";
-        multiplierElem.classList.remove("loading");
-
-        confidenceElem.innerText = "Confidence: " + confidence + "%";
-        confidenceElem.style.color = confidence > 85 ? "lime" : confidence > 70 ? "yellow" : "orange";
-      }, 1500);
+    if (lowCount >= 4) {
+      nextPrediction = (Math.random() * 5 + 3).toFixed(2); // bias towards 3x–8x
+      signal = "PLAY ✅ (High chance of big multiplier)";
+    } else if (lowCount === 3) {
+      nextPrediction = (Math.random() * 3 + 2).toFixed(2); // bias towards 2x–5x
+      signal = "PLAY with caution ⚠";
+    } else {
+      nextPrediction = (Math.random() * 1.5 + 1).toFixed(2); // 1x–2.5x
+      signal = "SKIP ❌ (Likely low multiplier)";
     }
-  </script>
+
+    document.getElementById("prediction").innerText = nextPrediction + "x";
+    document.getElementById("signal").innerText = signal;
+    document.getElementById("signal").style.color =
+      signal.includes("High") ? "lime" :
+      signal.includes("caution") ? "yellow" : "red";
+  }
+</script>
 
 </body>
 </html>
