@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aviator AI Predictor</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      background: linear-gradient(180deg, #0d0d0d, #1a1a1a);
+      color: #fff;
+      padding: 30px;
+    }
+    h1 {
+      color: #ff3c3c;
+      font-size: 2.2em;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #ccc;
+    }
+    .prediction-box {
+      background: #222;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 320px;
+      margin: 20px auto;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+    }
+    .multiplier {
+      font-size: 3em;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+    .confidence {
+      font-size: 1.1em;
+      margin-bottom: 15px;
+    }
+    button {
+      background: #ff3c3c;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1em;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #e60000;
+    }
+    .loading {
+      animation: blink 0.6s infinite alternate;
+    }
+    @keyframes blink {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>✈️ Aviator AI Predictor</h1>
+  <p>Get your next multiplier prediction instantly</p>
+
+  <div class="prediction-box">
+    <div class="multiplier" id="multiplier">--</div>
+    <div class="confidence" id="confidence">Confidence: --%</div>
+    <button onclick="predict()">🎯 Predict</button>
+  </div>
+
+  <script>
+    function predict() {
+      const multiplierElem = document.getElementById("multiplier");
+      const confidenceElem = document.getElementById("confidence");
+
+      // Simulate "analyzing" effect
+      multiplierElem.innerText = "Calculating...";
+      multiplierElem.classList.add("loading");
+      confidenceElem.innerText = "Analyzing patterns...";
+
+      setTimeout(() => {
+        // Fake AI logic: Bias towards multipliers between 1.5x and 9x
+        let multiplier = (Math.random() * 7.5 + 1.5).toFixed(2);
+        
+        // Fake confidence between 60% and 98%
+        let confidence = Math.floor(Math.random() * 38) + 60;
+
+        multiplierElem.innerText = multiplier + "x";
+        multiplierElem.classList.remove("loading");
+
+        confidenceElem.innerText = "Confidence: " + confidence + "%";
+        confidenceElem.style.color = confidence > 85 ? "lime" : confidence > 70 ? "yellow" : "orange";
+      }, 1500);
+    }
+  </script>
+
+</body>
+</html>
